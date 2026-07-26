@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4cfd00, #ff006a);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .input-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00ff40;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: #fc0d00;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        button:hover {
+            background: #38ca38;
+        }
+
+        button:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card {
+            background: #e4f7c8;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 17px;
+        }
+
+        span {
+            color: #e54646;
+            font-weight: bold;
+        }
+
+        @media(max-width:500px) {
+            .input-box {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🎯 Random Number Game</h1>
+
+        <label>Guess the Number (1 - 100)</label>
+
+        <div class="input-box">
+            <input type="number" id="input" placeholder="Enter number">
+            <button id="btn">Check</button>
+        </div>
+
+        <div class="info">
+            <div class="card">Your Guess : <span id="userGuess">-</span></div>
+            <div class="card">Actual No : <span id="actualNo">?</span></div>
+            <div class="card">Result : <span id="result">Start Guessing!</span></div>
+            <div class="card">Attempts Left : <span id="attempt">10</span></div>
+        </div>
+    </div>
+
+    <script>
+        let input = document.querySelector("#input");
+        let btn = document.querySelector("#btn");
+
+        let userGuess = document.querySelector("#userGuess");
+        let actualNo = document.querySelector("#actualNo");
+        let result = document.querySelector("#result");
+        let attempt = document.querySelector("#attempt");
+
+        let random = Math.floor(Math.random() * 100) + 1;
+       
+
+        let count = 0;
+        let maxAttempts = 10;
+
+        attempt.textContent = maxAttempts;
+
+        btn.addEventListener("click", function () {
+
+            let value = Number(input.value.trim());
+
+            if (input.value.trim() === "" || isNaN(value)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            if (value < 1 || value > 100) {
+                alert("Enter a number between 1 and 100.");
+                return;
+            }
+
+            count++;
+
+            userGuess.textContent = value;
+            attempt.textContent = maxAttempts - count;
+
+            if (value === random) {
+                result.textContent = "🎉 You Won!";
+                 actualNo.textContent = random;
+                btn.disabled = true;
+            }
+            else if (value < random) {
+                result.textContent = "📉 Too Low";
+            }
+            else {
+                result.textContent = "📈 Too High";
+            }
+
+            if (count === maxAttempts && value !== random) {
+                result.textContent = "😢 Game Over";
+                actualNo.textContent = random;
+                btn.disabled = true;
+            }
+
+            input.value = "";
+            input.focus();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stopwatch</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f5f5;
+}
+
+.container{
+    width:400px;
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.time{
+    font-size:50px;
+    margin:30px 0;
+    font-weight:bold;
+}
+
+button{
+    padding:12px 18px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#0077ff;
+    color:white;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Stopwatch</h1>
+
+    <div class="time">
+        <span id="hr">00</span> :
+        <span id="min">00</span> :
+        <span id="sec">00</span>
+    </div>
+
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+
+</div>
+
+<script>
+
+const hr = document.querySelector("#hr");
+const min = document.querySelector("#min");
+const sec = document.querySelector("#sec");
+
+const start = document.querySelector("#start");
+const stop = document.querySelector("#stop");
+const reset = document.querySelector("#reset");
+
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
+
+let timer = null;
+
+function updateDisplay(){
+
+    hr.textContent = String(hours).padStart(2,"0");
+    min.textContent = String(minutes).padStart(2,"0");
+    sec.textContent = String(seconds).padStart(2,"0");
+
+}
+
+start.addEventListener("click",()=>{
+
+    if(timer !== null) return;
+
+    timer = setInterval(()=>{
+
+        seconds++;
+
+        if(seconds === 60){
+
+            seconds = 0;
+            minutes++;
+
+        }
+
+        if(minutes === 60){
+
+            minutes = 0;
+            hours++;
+
+        }
+
+        updateDisplay();
+
+    },1000);
+
+});
+
+stop.addEventListener("click",()=>{
+
+    clearInterval(timer);
+    timer = null;
+
+});
+
+reset.addEventListener("click",()=>{
+
+    clearInterval(timer);
+    timer = null;
+
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+
+    updateDisplay();
+
+});
+
+</script>
+
+</body>
+</html>

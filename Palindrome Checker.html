@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            transition: .3s;
+        }
+
+        input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 8px rgba(79, 70, 229, .3);
+        }
+
+        .result {
+            margin-top: 25px;
+            background: #f5f5f5;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .result {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Palindrome Checker</h1>
+
+        <input type="text" id="input" placeholder="Enter a word...">
+
+        <div class="result">
+            <span id="check">Start Typing...</span>
+        </div>
+    </div>
+
+    <script>
+        let input = document.querySelector("input");
+        let check = document.querySelector("#check");
+
+        input.addEventListener("input", () => {
+
+            let value = (input.value).trim().toLowerCase();
+            let revStr = "";
+
+            for (let i = value.length - 1; i >= 0; i--) {
+                revStr += value[i];
+            }
+
+            if (value === "") {
+                check.textContent = "Start Typing...";
+            }
+            else if (value === revStr) {
+                check.textContent = "✅ Palindrome";
+            }
+            else {
+                check.textContent = "❌ Not a Palindrome";
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
